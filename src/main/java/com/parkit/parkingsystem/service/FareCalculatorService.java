@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
@@ -17,13 +18,28 @@ public class FareCalculatorService {
 		double durationInMinutes = (timeOut - timeIn) / 1000 / 60;
 		double durationInHours = durationInMinutes / 60;
 
+		double priceCar = durationInHours * Fare.CAR_RATE_PER_HOUR;
+		double priceBike = durationInHours * Fare.BIKE_RATE_PER_HOUR;
+
+		if (durationInMinutes <= 30) {
+			priceCar = 0;
+			priceBike = 0;
+		}
+
+		TicketDAO ticketDAO = new TicketDAO();
+
+		if (ticketDAO.isReccurent(ticket)) {
+			priceBike = priceBike - (priceBike * 0.05);
+			priceCar = priceCar - (priceCar * 0.05);
+		}
+
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR: {
-			ticket.setPrice(durationInHours * Fare.CAR_RATE_PER_HOUR);
+			ticket.setPrice(priceCar);
 			break;
 		}
 		case BIKE: {
-			ticket.setPrice(durationInHours * Fare.BIKE_RATE_PER_HOUR);
+			ticket.setPrice(priceBike);
 			break;
 		}
 		default:
