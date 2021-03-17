@@ -6,6 +6,19 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
+	private TicketDAO ticketDAO;
+
+	public FareCalculatorService(TicketDAO ticketDAO) {
+		super();
+		this.ticketDAO = ticketDAO;
+	}
+
+	public FareCalculatorService() {
+
+		this.ticketDAO = new TicketDAO();
+
+	}
+
 	public void calculateFare(Ticket ticket) {
 		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
 			throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
@@ -26,8 +39,7 @@ public class FareCalculatorService {
 			priceBike = 0;
 		}
 
-		TicketDAO ticketDAO = new TicketDAO();
-
+		/* new TicketDAO().isReccurent(ticket); */
 		if (ticketDAO.isReccurent(ticket)) {
 			priceBike = priceBike - (priceBike * 0.05);
 			priceCar = priceCar - (priceCar * 0.05);
