@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
-import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
@@ -27,7 +26,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
-	private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+//	private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
 	@Mock
 	private static ParkingSpotDAO parkingSpotDAO;
 	@Mock
@@ -50,7 +49,6 @@ public class ParkingDataBaseIT {
 //		ticketDAO.dataBaseConfig = dataBaseTestConfig;
 //		ticket = new Ticket();
 //		fareCalculatorService = new FareCalculatorService();
-
 		dataBasePrepareService = new DataBasePrepareService();
 	}
 
@@ -67,8 +65,8 @@ public class ParkingDataBaseIT {
 
 	@Test
 	public void testParkingACar() {
-		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		// ARRANGE
+		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		when(inputReaderUtil.readSelection()).thenReturn(1);
 		Mockito.when(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR)).thenReturn(15);
 
@@ -78,16 +76,11 @@ public class ParkingDataBaseIT {
 		// ASSERT
 		Mockito.verify(ticketDAO).saveTicket(Mockito.any(Ticket.class));
 		Mockito.verify(parkingSpotDAO).updateParking(Mockito.any(ParkingSpot.class));
-
-		// TODO: check that a ticket is actually saved in DB and Parking table is
-		// updated
-		// with availability
 	}
 
 	@Test
 	public void testParkingLotExit() {
 		// GIVEN
-//		testParkingACar();
 		Date inTime = new Date();
 		inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
 		Date outTime = new Date();
@@ -108,9 +101,6 @@ public class ParkingDataBaseIT {
 		// THEN
 		Mockito.verify(parkingSpotDAO).updateParking(Mockito.any(ParkingSpot.class));
 		Mockito.verify(ticketDAO).updateTicket(ticket);
-
-		// TODO: check that the fare generated and out time are populated correctly in
-		// the database
 	}
 
 }

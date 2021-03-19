@@ -37,7 +37,6 @@ public class FareCalculatorServiceTest {
 	@BeforeEach
 	private void setUpPerTest() {
 		ticket = new Ticket();
-//		Mockito.when(ticketDAO.isReccurent(ticket)).thenReturn(false);
 	}
 
 	@Test
@@ -169,7 +168,6 @@ public class FareCalculatorServiceTest {
 
 	@Test
 	public void discountOnFareForReccuringCars() {
-
 		// ARRANGE
 		fareCalculatorService = new FareCalculatorService(ticketDAO);
 		Ticket ticket = new Ticket();
@@ -183,26 +181,11 @@ public class FareCalculatorServiceTest {
 		ticket.setParkingSpot(parkingSpot);
 		Mockito.when(ticketDAO.isReccurent(ticket)).thenReturn(true);
 
-//		Ticket ticket2 = new Ticket();
-//		ticket2.setVehicleRegNumber(ticket.getVehicleRegNumber());
-//		ticket2.setVehicleRegNumber("ABCDEF");
-//		Date inTime2 = new Date();
-//		inTime2.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
-//		Date outTime2 = new Date();
-//		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);
-
 		// ACT
 		fareCalculatorService.calculateFare(ticket);
-//
-//		ticket2.setInTime(inTime2);
-//		ticket2.setOutTime(outTime2);
-//		ticket2.setParkingSpot(parkingSpot2);
-//		fareCalculatorService.calculateFare(ticket2);
-//		double prixTicket2 = ticket2.getPrice() - (ticket2.getPrice() * 0.05);
 
 		// ASSERT
 		assertEquals(Fare.CAR_RATE_PER_HOUR - (Fare.CAR_RATE_PER_HOUR * 0.05), ticket.getPrice());
-//		assertEquals(Fare.CAR_RATE_PER_HOUR - (Fare.CAR_RATE_PER_HOUR * 0.05), prixTicket2);
 	}
 
 }

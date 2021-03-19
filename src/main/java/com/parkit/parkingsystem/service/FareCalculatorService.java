@@ -14,9 +14,7 @@ public class FareCalculatorService {
 	}
 
 	public FareCalculatorService() {
-
 		this.ticketDAO = new TicketDAO();
-
 	}
 
 	public void calculateFare(Ticket ticket) {
@@ -39,7 +37,6 @@ public class FareCalculatorService {
 			priceBike = 0;
 		}
 
-		/* new TicketDAO().isReccurent(ticket); */
 		if (ticketDAO.isReccurent(ticket)) {
 			priceBike = priceBike - (priceBike * 0.05);
 			priceCar = priceCar - (priceCar * 0.05);
