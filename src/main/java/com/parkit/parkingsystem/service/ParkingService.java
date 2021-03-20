@@ -117,8 +117,8 @@ public class ParkingService {
 				System.out.println("Unable to update ticket information. Error occurred");
 			}
 		} catch (Exception e) {
-//            logger.error("Unable to process exiting vehicle",e);
-			System.out.println("Unable to process exiting vehicle" + e.getMessage());
+			logger.error("Unable to process exiting vehicle", e);
+//			System.out.println("Unable to process exiting vehicle" + e.getMessage());
 
 		}
 	}
