@@ -188,4 +188,26 @@ public class FareCalculatorServiceTest {
 		assertEquals(Fare.CAR_RATE_PER_HOUR - (Fare.CAR_RATE_PER_HOUR * 0.05), ticket.getPrice());
 	}
 
+	@Test
+	public void discountOnFareForReccuringBikes() {
+		// ARRANGE
+		fareCalculatorService = new FareCalculatorService(ticketDAO);
+		Ticket ticket = new Ticket();
+		ticket.setVehicleRegNumber("ABCDEF");
+		Date inTime = new Date();
+		inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
+		Date outTime = new Date();
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
+		ticket.setInTime(inTime);
+		ticket.setOutTime(outTime);
+		ticket.setParkingSpot(parkingSpot);
+		Mockito.when(ticketDAO.isReccurent(ticket)).thenReturn(true);
+
+		// ACT
+		fareCalculatorService.calculateFare(ticket);
+
+		// ASSERT
+		assertEquals(Fare.BIKE_RATE_PER_HOUR - (Fare.BIKE_RATE_PER_HOUR * 0.05), ticket.getPrice());
+	}
+
 }
