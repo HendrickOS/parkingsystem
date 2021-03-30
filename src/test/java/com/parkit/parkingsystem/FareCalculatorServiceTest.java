@@ -74,6 +74,7 @@ public class FareCalculatorServiceTest {
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
 
+		ticket.setId(0);
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
