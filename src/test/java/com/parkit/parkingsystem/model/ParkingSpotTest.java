@@ -51,7 +51,6 @@ public class ParkingSpotTest {
 
 		assertEquals(false, parkingSpot.equals(null));
 		assertEquals(true, parkingSpot.equals(parkingSpot));
-//		assertEquals(number, parkingSpot.equals(o));
 
 	}
 
